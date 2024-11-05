@@ -88,7 +88,15 @@ if (-not $noCopy) {
 
 # Refresh the wallpaper without closing Explorer windows if specified or if noCopy is true
 if (-not $nr -or $noCopy) {
-    RUNDLL32.EXE user32.dll,UpdatePerUserSystemParameters
+        Add-Type -TypeDefinition @"
+        using System;
+        using System.Runtime.InteropServices;
+        public class User32 {
+            [DllImport("user32.dll", CharSet = CharSet.Auto)]
+            public static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni);
+        }
+"@
+        [User32]::SystemParametersInfo(0x0014, 0, $null, 0x0001)
     Write-Host "Refreshed desktop wallpaper to apply the new image."
 }
 
