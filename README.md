@@ -5,6 +5,11 @@ This repo offers a loophole to personalize your desktop background, allowing you
 
 *Say goodbye to the default and make your workspace truly yours! :")*
 
+# Additional Info
+- The scripts are designed to be run on Windows machines only, and have been tested to work on Windows 10. **Not tested on Windows 11.**
+- The scripts are written in `PowerShell` and `VBScript`, and hence require no additional software installations.
+- The scripts are also designed to be non-intrusive and can be easily removed by simply deleting the entire repository from your system.
+
 # Usage
 ## GUI Mode (Recommended)
 To change your wallpaper using the GUI, you can follow these steps:
@@ -44,9 +49,3 @@ If you want the scripts to run automatically every time you start your system, y
 1. Press `Win + R` to open the `Run` dialog box and type `shell:startup` to open the `Startup` folder.
 1. Move the shortcut you created in step 1 to the `Startup` folder.
 1. Open `Task Manager` and navigate to the `Startup` tab to verify that the script has been added to the startup programs, and is `Enabled`.
-
-
-# Additional Info
-- The scripts are designed to be run on Windows machines only. They have been tested on Windows 10 and work as expected. **No guarantees for other versions.**
-- The scripts are also designed to be non-intrusive and can be easily removed by deleting the cloned repository.
-
