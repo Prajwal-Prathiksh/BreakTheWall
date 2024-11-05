@@ -9,8 +9,9 @@ This repo offers a loophole to personalize your desktop background, allowing you
 ## GUI Mode (Recommended)
 To change your wallpaper using the GUI, you can follow these steps:
 1. Clone this repository to your local machine. If you don't have git installed, you can download the zip file and extract it. *(If this is the first time you're working with `PowerShell` scripts, save the script in your `Downloads` directory.)*
-2. Save the image/images as per instructions in the [One-time Change](#one-time-change) or [Scheduled Change](#scheduled-change) sections.
-3. Run the [`BreakTheWall_GUI.ps1`](BreakTheWall_GUI.ps1) script by right-clicking on it and selecting `Run with PowerShell`. *(For pro-users, you can also run it from the `PowerShell` terminal, but make sure to navigate to the script's location first.)*
+1. Save the image/images as per instructions in the [One-time Change](#one-time-change) or [Scheduled Change](#scheduled-change) sections.
+1. **[Optional]** You can update the interval between wallpaper changes from the GUI itself. **By default, the interval is set to 1 hour.**
+1. Run the [`BreakTheWall_GUI.ps1`](BreakTheWall_GUI.ps1) script by right-clicking on it and selecting `Run with PowerShell`. *(For pro-users, you can also run it from the `PowerShell` terminal, but make sure to navigate to the script's location first.)*
 
 ## One-time Change
 You can use the [`OneTimeChanger.ps1`](OneTimeChanger.ps1) script to change your wallpaper to a custom one, as a one-time change. Here's how you can do it:
