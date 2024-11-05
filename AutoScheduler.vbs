@@ -26,7 +26,8 @@ Option Explicit
 
 Dim interval, logFile, fso, logStream, rootDir, destDir, transcodedWallpaperPath, srcPath
 
-interval = 3600 ' Time interval in seconds
+' Time interval in seconds
+interval = 3600
 logFile = CreateObject("Scripting.FileSystemObject").GetParentFolderName(WScript.ScriptFullName) & "\wallpaper_refresh.log"
 
 Set fso = CreateObject("Scripting.FileSystemObject")
