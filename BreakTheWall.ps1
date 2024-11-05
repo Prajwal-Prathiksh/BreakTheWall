@@ -86,17 +86,9 @@ if (-not $noCopy) {
     Write-Host "Copied $srcFile to $dest_file"
 }
 
-# Refresh the wallpaper without closing Explorer windows if specified or if noCopy is true
+# Refresh the desktop to apply the new wallpaper if -nr is not set or noCopy is set
 if (-not $nr -or $noCopy) {
-        Add-Type -TypeDefinition @"
-        using System;
-        using System.Runtime.InteropServices;
-        public class User32 {
-            [DllImport("user32.dll", CharSet = CharSet.Auto)]
-            public static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni);
-        }
-"@
-        [User32]::SystemParametersInfo(0x0014, 0, $null, 0x0001)
+    .\UpdateSystemParameters.ps1
     Write-Host "Refreshed desktop wallpaper to apply the new image."
 }
 
