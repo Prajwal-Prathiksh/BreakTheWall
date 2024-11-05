@@ -5,7 +5,8 @@ This repo offers a loophole to personalize your desktop background, allowing you
 
 *Say goodbye to the default and make your workspace truly yours! :")*
 
-## Usage (One-time Change)
+# Usage
+## One-time Change
 You can use the `BreakTheWall.ps1` script to change your wallpaper to a custom one, as a one-time change. Here's how you can do it:
 1. Clone this repository to your local machine. If you don't have git installed, you can download the zip file and extract it. *(If this is the first time you're working with `PowerShell` scripts, save the script in your `Documents` directory.)*
 1. Store your desired wallpaper as `wallpaper.jpg` in the `Downloads` directory
@@ -17,7 +18,7 @@ You can use the `BreakTheWall.ps1` script to change your wallpaper to a custom o
 **That's it! Your wallpaper should now be updated to the one you saved! <3**
 > Upon restarting your system or changing monitors, the wallpaper might revert to the default one. In such cases, you can re-run the steps above to update it again.
 
-## Usage (Scheduled Change)
+## Scheduled Change
 You can use the `AutoBreakTheWall.vbs` script to keep changing your wallpapers at regular intervals automatically, from a set of saved wallpapers. Here's how you can do it:
 1. Same as above, clone this repository to your local machine or download the zip file and extract it.
 1. Create a new folder named `custom_wallpapers` in the `Downloads` directory (Eg. `%USERPROFILE%\Downloads\custom_wallpapers`).
@@ -32,9 +33,15 @@ You can use the `AutoBreakTheWall.vbs` script to keep changing your wallpapers a
 
 > You can stop the script at any time by opening the `Task Manager` and ending the `Microsoft Windows Based Script Host` process.
 
+## Run scripts on Startup
+If you want the scripts to run automatically every time you start your system, you can follow these steps:
+1. In the directory where you cloned the repository, right-click on the `AutoBreakTheWall.vbs` script and select `Create Shortcut`.
+1. Press `Win + R` to open the `Run` dialog box and type `shell:startup` to open the `Startup` folder.
+1. Move the shortcut you created in step 1 to the `Startup` folder.
+1. Open `Task Manager` and navigate to the `Startup` tab to verify that the script has been added to the startup programs, and is `Enabled`.
 
 
-## Additional Info
+# Additional Info
 - The scripts are designed to be run on Windows machines only. They have been tested on Windows 10 and work as expected. **No guarantees for other versions.**
 - The scripts are also designed to be non-intrusive and can be easily removed by deleting the cloned repository.
 
