@@ -5,7 +5,7 @@ This repo offers a loophole to personalize your desktop background, allowing you
 
 *Say goodbye to the default and make your workspace truly yours! :")*
 
-# Additional Info
+## Additional Info
 - The scripts are designed to be run on Windows machines only, and have been tested to work on Windows 10. **Not tested on Windows 11.**
 - The scripts are written in `PowerShell` and `VBScript`, and hence require no additional software installations.
 - The scripts are also designed to be non-intrusive and can be easily removed by simply deleting the entire repository from your system.
