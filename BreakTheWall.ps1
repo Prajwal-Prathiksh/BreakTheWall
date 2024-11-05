@@ -24,10 +24,6 @@ None. You cannot pipe input to this script.
 
 .OUTPUTS
 None. This script does not generate any output.
-
-.NOTES
-File Name: wallapaper_changer.ps1
-Author   : K T Prajwal Prathiksh
 #>
 
 param(
