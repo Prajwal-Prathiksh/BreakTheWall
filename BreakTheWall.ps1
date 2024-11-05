@@ -88,26 +88,7 @@ if (-not $noCopy) {
 
 # Refresh the wallpaper without closing Explorer windows if specified or if noCopy is true
 if (-not $nr -or $noCopy) {
-    Add-Type @"
-    using System;
-    using System.Runtime.InteropServices;
-
-    public class CustomWallpaper {
-        [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        public static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni);
-
-        public static void RefreshWallpaper(string wallpaperPath) {
-            const int SPI_SETDESKWALLPAPER = 0x0014;
-            const int SPIF_UPDATEINIFILE = 0x01;
-            const int SPIF_SENDCHANGE = 0x02;
-            SystemParametersInfo(SPI_SETDESKWALLPAPER, 0, wallpaperPath, SPIF_UPDATEINIFILE | SPIF_SENDCHANGE);
-        }
-    }
-"@
-
-    # Set the wallpaper path to the cached file
-    $wallpaperPath = "$destDir\$dest_file"
-    [CustomWallpaper]::RefreshWallpaper($wallpaperPath)
+    RUNDLL32.EXE user32.dll,UpdatePerUserSystemParameters
     Write-Host "Refreshed desktop wallpaper to apply the new image."
 }
 
