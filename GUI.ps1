@@ -27,6 +27,20 @@ $form.StartPosition = "CenterScreen"
 # Setup source paths
 $srcDir = "$env:USERPROFILE\Downloads"
 
+# Setup ps1 script paths
+$updateSysParamsScript = "$PSScriptRoot\UpdateSystemParameters.ps1"
+$breakTheWallScript = "$PSScriptRoot\BreakTheWall.ps1"
+$autoBreakTheWallScript = "$PSScriptRoot\RestartAutoBreakTheWall.ps1"
+
+# Check if srcDir\wallpaper.jpg exists
+$srcFile = "$srcDir\wallpaper.jpg"
+# Check if srcDir\custom_wallpapers directory exists
+$customWallpapersDir = "$srcDir\custom_wallpapers"
+$customWallpapersCount = 0
+if (Test-Path -Path $customWallpapersDir) {
+    $customWallpapersCount = (Get-ChildItem -Path $customWallpapersDir -Filter *.jpg).Count
+}
+
 # Create TabControl
 $tabControl = New-Object System.Windows.Forms.TabControl
 $tabControl.Size = New-Object System.Drawing.Size($tabControl_x, $tabControl_y)
@@ -47,23 +61,26 @@ $btnBreakTheWall.Location = New-Object System.Drawing.Point($tabLeftOffset, 300)
 $btnBreakTheWall.Add_Click({
     try {
         # Confirm that the BreakTheWall.ps1 script exists
-        $scriptPath = "$PSScriptRoot\BreakTheWall.ps1"
-        if (!(Test-Path -Path $scriptPath)) {
-            [System.Windows.Forms.MessageBox]::Show("BreakTheWall.ps1 script not found in the expected location: $scriptPath")
+        if (!(Test-Path -Path $breakTheWallScript)) {
+            [System.Windows.Forms.MessageBox]::Show("Script not found in the expected location: $breakTheWallScript")
             return
         }
         
         # Confirm that wallpaper.jpg exists
-        $srcFile = "$srcDir\wallpaper.jpg" # Ensure $srcFile is defined
+        $srcFile = "$srcDir\wallpaper.jpg"
         if (!(Test-Path -Path $srcFile)) {
             [System.Windows.Forms.MessageBox]::Show("wallpaper.jpg not found in the expected location: $srcFile")
+            & $updateSysParamsScript
+            $form.Dispose()
             return
         }
 
-        # Run the BreakTheWall script
-        & $scriptPath
-        [System.Windows.Forms.MessageBox]::Show("BreakTheWall.ps1 executed - Wallpaper changed. Bye bye!")
-        $form.Close()
+        # Run script
+        & $breakTheWallScript
+        [System.Windows.Forms.MessageBox]::Show("Script executed - Wallpaper changed. Bye bye!")
+        & $updateSysParamsScript
+        $form.Dispose()
+        [System.Windows.Forms.Application]::Exit()
     } catch {
         # Display a detailed error message
         [System.Windows.Forms.MessageBox]::Show("An error occurred: $($_.Exception.Message)")
@@ -80,23 +97,21 @@ $btnAutoBreakTheWall.Size = New-Object System.Drawing.Size($button_x, $button_y)
 $btnAutoBreakTheWall.Location = New-Object System.Drawing.Point($tabLeftOffset, 300)
 $btnAutoBreakTheWall.Add_Click({
     try {
-        # Confirm that the RestartAutoBreakTheWall.ps1 script exists
-        $scriptPath = "$PSScriptRoot\RestartAutoBreakTheWall.ps1"
-        if (!(Test-Path -Path $scriptPath)) {
-            [System.Windows.Forms.MessageBox]::Show("RestartAutoBreakTheWall.ps1 script not found in the expected location: $scriptPath")
+        if (!(Test-Path -Path $autoBreakTheWallScript)) {
+            [System.Windows.Forms.MessageBox]::Show("Script not found in the expected location: $autoBreakTheWallScript")
             return
         }
         
-        # Confirm that custom_wallpapers directory exists
-        $customWallpapersDir = "$srcDir\custom_wallpapers"
-        if (!(Test-Path -Path $customWallpapersDir)) {
-            [System.Windows.Forms.MessageBox]::Show("custom_wallpapers directory not found in the expected location: $customWallpapersDir")
+        # Check number of JPG files in custom_wallpapers directory is greater than 0
+        if ($customWallpapersCount -eq 0) {
+            [System.Windows.Forms.MessageBox]::Show("No JPG files found in custom_wallpapers directory. Please add some images to $customWallpapersDir.")
             return
         }
 
         # Run the RestartAutoBreakTheWall.ps1 script
-        & $scriptPath
-        [System.Windows.Forms.MessageBox]::Show("AutoBreakTheWall.ps1 is running. Bye bye!")
+        & $autoBreakTheWallScript
+        [System.Windows.Forms.MessageBox]::Show("Script executed - Auto Wallpaper changer started. Bye bye!")
+        & $updateSysParamsScript
         $form.Close()
     } catch {
         # Display a detailed error message
@@ -113,8 +128,6 @@ $tabControl.TabPages.Add($schedulerTab)
 $form.Controls.Add($tabControl)
 
 ### One-time Changer Tab ###
-# Check if srcDir\wallpaper.jpg exists
-$srcFile = "$srcDir\wallpaper.jpg"
 if (Test-Path -Path $srcFile) {
     $img = [System.Drawing.Image]::FromFile($srcFile)
     $pictureBox = New-Object System.Windows.Forms.PictureBox
@@ -141,13 +154,6 @@ if (Test-Path -Path $srcFile) {
 }
 
 ### Auto Changer Tab ###
-# Check if srcDir\custom_wallpapers directory exists
-$customWallpapersDir = "$srcDir\custom_wallpapers"
-$customWallpapersCount = 0
-if (Test-Path -Path $customWallpapersDir) {
-    $customWallpapersCount = (Get-ChildItem -Path $customWallpapersDir -Filter *.jpg).Count
-}
-
 if ($customWallpapersCount -gt 0) {
     $lblCustomWallpapers = New-Object System.Windows.Forms.Label
     $lblCustomWallpapers.Text = "custom_wallpapers directory found. Number of JPG files: $customWallpapersCount. AutoBreakTheWall.ps1 will use these images."
