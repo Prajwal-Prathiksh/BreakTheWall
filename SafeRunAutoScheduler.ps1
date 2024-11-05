@@ -8,6 +8,6 @@ if ($process) {
 }
 
 # Run the AutoBreakTheWall.vbs script
-$vsbFile = "$PSScriptRoot\AutoBreakTheWall.vbs"
+$vsbFile = "$PSScriptRoot\AutoScheduler.vbs"
 Start-Process -FilePath $vsbFile -WindowStyle Hidden
-Write-Host "AutoBreakTheWall.vbs is running."
+Write-Host "AutoScheduler.vbs is running."
