@@ -108,7 +108,8 @@ $btnAutoutoScheduler.Add_Click({
         }
 
         # Run script
-        & $autoSchedulerScript
+        $interval = $txtInterval.Text
+        & $autoSchedulerScript -interval $interval
         [System.Windows.Forms.MessageBox]::Show("Script executed - Auto Wallpaper changer started. Bye bye!")
         & $updateSysParamsScript
         $form.Close()
@@ -161,6 +162,20 @@ if ($customWallpapersCount -gt 0) {
     $lblCustomWallpapers.Size = New-Object System.Drawing.Size($labelBox_x, $labelBox_y)
     $lblCustomWallpapers.Location = New-Object System.Drawing.Point($tabLeftOffset, 20)
     $schedulerTab.Controls.Add($lblCustomWallpapers)
+
+    # Add user input for interval
+    $lblInterval = New-Object System.Windows.Forms.Label
+    $lblInterval.Text = "Enter the interval for changing wallpapers (in seconds):"
+    $lblInterval.Size = New-Object System.Drawing.Size($labelBox_x, 40)
+    $lblInterval.Location = New-Object System.Drawing.Point($tabLeftOffset, 100)
+    $schedulerTab.Controls.Add($lblInterval)
+
+    $txtInterval = New-Object System.Windows.Forms.TextBox
+    $txtInterval.Size = New-Object System.Drawing.Size($labelBox_x, $labelBox_y)
+    $txtInterval.Location = New-Object System.Drawing.Point($tabLeftOffset, 150)
+    $txtInterval.Text = "3600"
+    $schedulerTab.Controls.Add($txtInterval)
+
 } else {
     $lblCustomWallpapersNotFound = New-Object System.Windows.Forms.Label
     $lblCustomWallpapersNotFound.Text = "custom_wallpapers directory not found. Please create custom_wallpapers directory in $srcDir and place some JPG files in it."
