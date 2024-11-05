@@ -31,29 +31,29 @@ $scriptBlock = {
     # Setup the root and destination paths for the wallpaper
     $rootDir = "$env:APPDATA\Microsoft\Windows\Themes"
     $destDir = "$env:APPDATA\Microsoft\Windows\Themes\CachedFiles"
-    $transcodedWallpaperDir = "$rootDir\TranscodedWallpaper"
-    
-    # Check if the destination path exists; if not, create it
-    if (-not (Test-Path -Path $destDir)) {
-        Log-Message "Destination path does not exist, creating path $destDir" $logFile
-        New-Item -Path $destDir -ItemType Directory
-    }
-
-    # Remove the old transcoded wallpaper
-    if (Test-Path -Path $transcodedWallpaperDir) {
-        Remove-Item -Path $transcodedWallpaperDir -Force
-        Log-Message "Removed $transcodedWallpaperDir" $logFile
-    }
-
-    # Remove all files in the destination path
-    $files = Get-ChildItem -Path $destDir -File
-    foreach ($file in $files) {
-        Remove-Item -Path $file.FullName -Force
-    }
-    Log-Message "Removed all files in $destDir" $logFile
+    $transcodedWallpaperPath = "$rootDir\TranscodedWallpaper"
     
     while ($true) {
         try {
+            # Check if the destination path exists; if not, create it
+            if (-not (Test-Path -Path $destDir)) {
+                Log-Message "Destination path does not exist, creating path $destDir" $logFile
+                New-Item -Path $destDir -ItemType Directory
+            }
+        
+            # Remove the old transcoded wallpaper
+            if (Test-Path -Path $transcodedWallpaperPath) {
+                Remove-Item -Path $transcodedWallpaperPath -Force
+                Log-Message "Removed $transcodedWallpaperPath" $logFile
+            }
+        
+            # Remove all files in the destination path
+            $files = Get-ChildItem -Path $destDir -File
+            foreach ($file in $files) {
+                Remove-Item -Path $file.FullName -Force
+            }
+            Log-Message "Removed all files in $destDir" $logFile
+            
             $srcPath = "$env:USERPROFILE\Downloads\custom_wallpapers"
             # Check if the source path exists
             if (-not (Test-Path $srcPath)) {
@@ -78,7 +78,7 @@ $scriptBlock = {
 
             Log-Message "Starting wallpaper copy process." $logFile
             # Copy the new wallpaper to the root path
-            Copy-Item -Path $srcFile -Destination "$rootDir\TranscodedWallpaper"
+            Copy-Item -Path $srcFile -Destination "$transcodedWallpaperPath"
             Log-Message "Copied $srcFile to TranscodedWallpaper" $logFile
 
             # Copy the new wallpaper to the destination path
@@ -86,7 +86,15 @@ $scriptBlock = {
             Log-Message "Copied $srcFile to $dest_file" $logFile
     
             # Refresh the desktop to apply the new wallpaper
-            RUNDLL32.EXE user32.dll,UpdatePerUserSystemParameters
+            Add-Type -TypeDefinition @"
+            using System;
+            using System.Runtime.InteropServices;
+            public class User32 {
+                [DllImport("user32.dll", CharSet = CharSet.Auto)]
+                public static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni);
+            }
+"@
+            [User32]::SystemParametersInfo(0x0014, 0, $null, 0x0001)
             Log-Message "Refreshed desktop wallpaper to apply the new image." $logFile
     
         } catch {
@@ -101,6 +109,3 @@ $scriptBlock = {
 
 # Start the script block as a background job
 Start-Job -ScriptBlock $scriptBlock -Name "WallpaperRefreshJob" -ArgumentList $logFile, $interval
-
-# Retrieve the job output and errors
-Receive-Job -Name "WallpaperRefreshJob" -Keep
