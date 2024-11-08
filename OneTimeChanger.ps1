@@ -88,6 +88,7 @@ if (-not $noCopy) {
 
 # Refresh the desktop to apply the new wallpaper if -nr is not set or noCopy is set
 if (-not $nr -or $noCopy) {
+    Start-Sleep -Seconds 2
     .\UpdateSystemParameters.ps1
     Write-Host "Refreshed desktop wallpaper to apply the new image."
 }

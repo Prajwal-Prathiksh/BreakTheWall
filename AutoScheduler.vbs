@@ -125,6 +125,9 @@ Do While True
     fso.CopyFile srcFile, destDir & "\" & destFile
     LogMessage "Copied " & srcFile & " to " & destFile
 
+    ' Sleep for 2 seconds to allow the file copy to complete
+    WScript.Sleep 2000
+
     ' Run UpdateSystemParameters.ps1 code for refreshing wallpaper
     Dim tempPSPath
     tempPSPath = fso.GetParentFolderName(WScript.ScriptFullName) & "\UpdateSystemParameters.ps1"
