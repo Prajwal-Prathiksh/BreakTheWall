@@ -11,16 +11,23 @@ This repo offers a loophole to personalize your desktop background, allowing you
 - The scripts are also designed to be non-intrusive and can be easily removed by simply deleting the entire repository from your system.
 
 # Usage
+## Clone Repository
+To get started, you can clone this repository to your local machine by running the following command in your terminal:
+```bash
+git clone https://github.com/Prajwal-Prathiksh/BreakTheWall.git
+```
+
+If you don't have `git` installed, you can download the zip file and extract it to your desired location. *(If this is the first time you're working with `PowerShell` scripts, save and extract the repository in your `Downloads` directory, to simplify the process.)*
+
+
 ## GUI Mode (Recommended)
 To change your wallpaper using the GUI, you can follow these steps:
-1. Clone this repository to your local machine. If you don't have git installed, you can download the zip file and extract it. *(If this is the first time you're working with `PowerShell` scripts, save the script in your `Downloads` directory.)*
 1. Save the image/images as per instructions in the [One-time Change](#one-time-change) or [Scheduled Change](#scheduled-change) sections.
 1. **[Optional]** You can update the interval between wallpaper changes from the GUI itself. **By default, the interval is set to 1 hour.**
 1. Run the [`BreakTheWall_GUI.ps1`](BreakTheWall_GUI.ps1) script by right-clicking on it and selecting `Run with PowerShell`. *(For pro-users, you can also run it from the `PowerShell` terminal, but make sure to navigate to the script's location first.)*
 
 ## One-time Change
 You can use the [`OneTimeChanger.ps1`](OneTimeChanger.ps1) script to change your wallpaper to a custom one, as a one-time change. Here's how you can do it:
-1. Clone this repository or download the zip file and extract it.
 1. Store your desired wallpaper as `wallpaper.jpg` in the `Downloads` directory
 > The script currently supports only `.jpg` files. If you have a different format, you can convert it to `.jpg` using an online converter, and the name must follow the format `wallpaper.jpg`.
 
@@ -32,7 +39,6 @@ You can use the [`OneTimeChanger.ps1`](OneTimeChanger.ps1) script to change your
 
 ## Scheduled Change
 You can use the [`SafeRunAutoScheduler.ps1`](SafeRunAutoScheduler.ps1) script to keep changing your wallpapers at regular intervals automatically, from a set of saved wallpapers. Here's how you can do it:
-1. Clone this repository or download the zip file and extract it.
 1. Create a new folder named `custom_wallpapers` in the `Downloads` directory (Eg. `%USERPROFILE%\Downloads\custom_wallpapers`).
 1. Store all the wallpapers you want to cycle through in the `custom_wallpapers` folder. **As mentioned before, the files must be in `.jpg` format only, but can have any name.**
 1. **[Optional]** If you want to change the interval between wallpaper changes, you can modify the `AutoScheduler.vbs` script. **By default, the interval is set to 1 hour.**
@@ -42,6 +48,13 @@ You can use the [`SafeRunAutoScheduler.ps1`](SafeRunAutoScheduler.ps1) script to
 > A log file named `wallpaper_refresh.log` will be created in the root directory of the repository, which will contain the timestamps of each wallpaper change. This can be used to verify the script's working or to debug any issues.
 
 > You can stop the script at any time by opening the `Task Manager` and ending the `Microsoft Windows Based Script Host` process.
+
+## Reset to Default Wallpaper
+If it ever becomes necessary for you to revert to the default wallpaper :"(, you can use the [`ResetWallpaper.ps1`](ResetWallpaper.ps1) script to do so. Here's how you can do it:
+1. Run the `ResetWallpaper.ps1` script.
+
+**That's it! Your wallpaper should now be updated to the default one .... :"(**
+
 
 ## Run scripts on Startup
 If you want the scripts to run automatically every time you start your system, you can follow these steps:
