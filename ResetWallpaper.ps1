@@ -3,8 +3,7 @@
 Resets the desktop wallpaper by removing the current transcoded wallpaper and cached files.
 
 .DESCRIPTION
-This script removes the current transcoded wallpaper and all cached wallpaper files from the specified directories. 
-It then calls another script to refresh the system parameters and reset the wallpaper.
+This script resets the desktop wallpaper by removing the current transcoded wallpaper and all cached files in the destination directory. It also refreshes the system parameters to reset the wallpaper, in addition to killing the AutoScheduler process.
 
 .PARAMETER rootDir
 The root directory where the transcoded wallpaper is stored.
@@ -26,6 +25,12 @@ This command runs the script to reset the desktop wallpaper.
 $rootDir = "$env:APPDATA\Microsoft\Windows\Themes"
 $destDir = "$env:APPDATA\Microsoft\Windows\Themes\CachedFiles"
 $transcodedWallpaperDir = "$rootDir\TranscodedWallpaper"
+
+# Setup ps1 script path
+$killAutoSchedulerScript = "$PSScriptRoot\KillAutoScheduler.ps1"
+
+# Run the script to kill the AutoScheduler process
+& $killAutoSchedulerScript
 
 # Remove the old transcoded wallpaper
 if (Test-Path -Path $transcodedWallpaperDir) {
