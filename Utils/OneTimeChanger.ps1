@@ -47,6 +47,9 @@ $rootDir = "$env:APPDATA\Microsoft\Windows\Themes"
 $destDir = "$env:APPDATA\Microsoft\Windows\Themes\CachedFiles"
 $transcodedWallpaperDir = "$rootDir\TranscodedWallpaper"
 
+# Setup ps1 script path
+$updateSystemParametersScript = "$PSScriptRoot\UpdateSystemParameters.ps1"
+
 # Check if the destination path exists; if not, create it
 if (-not (Test-Path -Path $destDir)) {
     Write-Host "Destination path does not exist, creating path $destDir"
@@ -89,7 +92,7 @@ if (-not $noCopy) {
 # Refresh the desktop to apply the new wallpaper if -nr is not set or noCopy is set
 if (-not $nr -or $noCopy) {
     Start-Sleep -Seconds 2
-    .\UpdateSystemParameters.ps1
+    & $updateSystemParametersScript
     Write-Host "Refreshed desktop wallpaper to apply the new image."
 }
 
