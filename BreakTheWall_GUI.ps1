@@ -28,10 +28,10 @@ $form.StartPosition = "CenterScreen"
 $srcDir = "$env:USERPROFILE\Downloads"
 
 # Setup ps1 script paths
-$updateSysParamsScript = "$PSScriptRoot\UpdateSystemParameters.ps1"
-$oneTimeChangerScript = "$PSScriptRoot\OneTimeChanger.ps1"
-$autoSchedulerScript = "$PSScriptRoot\SafeRunAutoScheduler.ps1"
-$resetWallpaperScript = "$PSScriptRoot\ResetWallpaper.ps1"
+$updateSysParamsScript = "$PSScriptRoot\Utils\UpdateSystemParameters.ps1"
+$oneTimeChangerScript = "$PSScriptRoot\Utils\OneTimeChanger.ps1"
+$autoSchedulerScript = "$PSScriptRoot\Utils\SafeRunAutoScheduler.ps1"
+$resetWallpaperScript = "$PSScriptRoot\Utils\ResetWallpaper.ps1"
 
 # Check if srcDir\wallpaper.jpg exists
 $srcFile = "$srcDir\wallpaper.jpg"

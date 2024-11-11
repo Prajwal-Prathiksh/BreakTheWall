@@ -28,6 +28,7 @@ $transcodedWallpaperDir = "$rootDir\TranscodedWallpaper"
 
 # Setup ps1 script path
 $killAutoSchedulerScript = "$PSScriptRoot\KillAutoScheduler.ps1"
+$updateSystemParametersScript = "$PSScriptRoot\UpdateSystemParameters.ps1"
 
 # Run the script to kill the AutoScheduler process
 & $killAutoSchedulerScript
@@ -47,5 +48,5 @@ Write-Host "Removed all files in $destDir"
 
 # Refresh the system parameters to reset the wallpaper
 Start-Sleep -Seconds 2
-.\UpdateSystemParameters.ps1
+& $updateSystemParametersScript
 Write-Host "Refreshed desktop to reset wallpaper."
