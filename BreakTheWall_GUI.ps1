@@ -31,6 +31,7 @@ $srcDir = "$env:USERPROFILE\Downloads"
 $updateSysParamsScript = "$PSScriptRoot\UpdateSystemParameters.ps1"
 $oneTimeChangerScript = "$PSScriptRoot\OneTimeChanger.ps1"
 $autoSchedulerScript = "$PSScriptRoot\SafeRunAutoScheduler.ps1"
+$resetWallpaperScript = "$PSScriptRoot\ResetWallpaper.ps1"
 
 # Check if srcDir\wallpaper.jpg exists
 $srcFile = "$srcDir\wallpaper.jpg"
@@ -85,8 +86,32 @@ $btnOneTimeChanger.Add_Click({
         [System.Windows.Forms.MessageBox]::Show("An error occurred: $($_.Exception.Message)")
     }
 })
-
 $oneTimeTab.Controls.Add($btnOneTimeChanger)
+
+$btnResetWallpaper = New-Object System.Windows.Forms.Button
+$btnResetWallpaper.Text = "Reset Wallpaper"
+$btnResetWallpaper.Font = New-Object System.Drawing.Font($btnResetWallpaper.Font, [System.Drawing.FontStyle]::Bold)
+$btnResetWallpaper.Size = New-Object System.Drawing.Size($button_x, $button_y)
+$btnResetWallpaper.Location = New-Object System.Drawing.Point($tabLeftOffset, 450)
+$btnResetWallpaper.Add_Click({
+    try {
+        if (!(Test-Path -Path $resetWallpaperScript)) {
+            [System.Windows.Forms.MessageBox]::Show("Script not found in the expected location: $resetWallpaperScript")
+            return
+        }
+        
+        # Run script
+        & $resetWallpaperScript
+        [System.Windows.Forms.MessageBox]::Show("Script executed - Wallpaper reset. Bye bye!")
+        & $updateSysParamsScript
+        $form.Dispose()
+        [System.Windows.Forms.Application]::Exit()
+    } catch {
+        # Display a detailed error message
+        [System.Windows.Forms.MessageBox]::Show("An error occurred: $($_.Exception.Message)")
+    }
+})
+$oneTimeTab.Controls.Add($btnResetWallpaper)
 
 # Define and add controls to schedulerTab
 $btnAutoutoScheduler = New-Object System.Windows.Forms.Button
